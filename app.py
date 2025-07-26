@@ -37,24 +37,31 @@ input_data = np.array([[pclass, sex_encoded, age, sibsp, parch, fare, embarked_e
 st.markdown("---")
 st.subheader("🎯 Prediction Result")
 
-# Choose gender-specific icon
-image_url = "https://cdn-icons-png.flaticon.com/512/168/168882.png"  # Male
-if sex == "female":
-    image_url = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png"  # Female
+if st.button("Predict Survival"):
+    # Gender-based image selection
+    image_url = "https://cdn-icons-png.flaticon.com/512/168/168882.png"  # male icon
+    if sex == "female":
+        image_url = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png"  # female icon
 
-col1, col2 = st.columns([1, 3])
-with col1:
-    st.image(image_url, width=100)
-with col2:
-    if prediction == 1:
-        st.success(f"✅ This passenger would have **survived**!")
-        st.markdown(f"**Survival Probability:** `{probability:.2%}`")
-    else:
-        st.error(f"❌ This passenger would **not have survived**.")
-        st.markdown(f"**Survival Probability:** `{probability:.2%}`")
+    # Make prediction
+    prediction = model.predict(input_data)[0]
+    probability = model.predict_proba(input_data)[0][1]
+
+    # Layout with image and result
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.image(image_url, width=100)
+    with col2:
+        if prediction == 1:
+            st.success("✅ This passenger would have **survived**!")
+            st.markdown(f"**Survival Probability:** `{probability:.2%}`")
+        else:
+            st.error("❌ This passenger would **not have survived**.")
+            st.markdown(f"**Survival Probability:** `{probability:.2%}`")
 
     st.markdown("---")
     st.info("Note: This prediction is based on a logistic regression model trained on historical Titanic data.")
+
 
 # Footer
 st.markdown("""
