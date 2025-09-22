@@ -1,0 +1,1 @@
+“Click on the Titanic App link to open an interactive application that shows the survivors of the Titanic and provides insights into who survived based on different factors such as age, gender, and passenger class.”
